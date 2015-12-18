@@ -2,20 +2,20 @@
 # У пользователя имеется возможность вводить номер канала, а также увеличивать
 # и уменьшать громкость.
 # Программа следит за тем, чтобы номер канала и уровень громкости оставались
-# в допустимых пределах: каналы в диапазоне от 0 до 19, громкость от 0 до 100.
+# в допустимых пределах: каналы в диапазоне от 0 до 10, громкость от 0 до 10.
 
 class TV(object):
     
     """Виртуальный телевизор"""
     def __init__(self, on_off=0,  volume=0, channel=1):
-        self.min_vol=0        # минимальная громкость
-        self.max_vol=100      # максимальная громкость
-        self.min_channel=1    # минимальный канал
-        self.max_channel=10   # максимальный канал
+        self.min_vol = 0        # минимальная громкость
+        self.max_vol = 10       # максимальная громкость
+        self.min_channel = 1    # минимальный канал
+        self.max_channel = 10   # максимальный канал
         """Здесь нужно будет восстановить из файла значения громкости и канала от предыдущего включения TV"""
-        self.on_off=on_off
-        self.volume=volume
-        self.channel=channel
+        self.on_off = on_off
+        self.volume = volume
+        self.channel = channel
         
     """Отражает состояние телевизора"""
     def state(self):
@@ -31,18 +31,18 @@ class TV(object):
     def on(self):
         if not self.on_off:   # если телевизор выключен
             self.on_off = 1    # включим телевизор
-            print("Телевизор включен.")    
+        print("Телевизор включен.")    
 
     """Выключает телевизор"""
     def off(self):
         if self.on_off:    # если телевизор включен
             self.on_off = 0    # выключим телевизор
-            print("Телевизор выключен.")
+        print("Телевизор выключен.")
             
     """Переключает канал"""        
     def set_channel(self, channel=1):
         if self.on_off:    # если телевизор включен
-            channel = int(input("Укажите номер канала: "))
+            channel = int(input("Укажите номер канала(" + str(self.min_channel) + "-" + str(self.max_channel) + "): "))
             # проверим, находится ли канал в допустимом диапазоне
             if (channel >= self.min_channel) and (channel <= self.max_channel):
                 self.channel = channel    # установим выбранный канал
@@ -51,6 +51,30 @@ class TV(object):
                 print("Допустимый диапазон каналов от " + str(self.min_channel) + " до " + str(self.max_channel) + ".")
         else:
             print("Включите телевизор, что бы переключать каналы.")    
+    
+    """Увеличивает громкость"""
+    def inc_volume(self):
+        if self.on_off:    # если телевизор включен
+            if self.volume < self.max_vol:    # если громкость не превышает допустимого диапазона
+                self.volume += 1                 # увеличим значение на 1
+                print("Громкость - " + str(self.volume))
+            else:
+                print("Громкость не должна превышать - " + str(self.max_vol))
+        else:    # если телевизор выключен
+            print("Включите телевизор, бы увеличить громкость.")        
+    
+    """Уменьшает громкость"""
+    def dec_volume(self):
+        if self.on_off:    # если телевизор включен
+            if self.volume > self.min_vol:    # если громкость не ниже допустимого диапазона
+                self.volume -= 1                 # уменьшим значение на 1
+                print("Громкость - " + str(self.volume))
+            else:
+                print("Громкость не быть ниже - " + str(self.min_vol))
+        else:    # если телевизор выключен
+            print("Включите телевизор, бы уменьшить громкость.")        
+        
+    
     
 # Главный модуль
 def main():
@@ -93,15 +117,14 @@ def main():
             
         #увеличить громкость
         elif choice == "4":
-            print("4")
+            tv.inc_volume()
         
         #уменьшить громкость
         elif choice == "5":
-            print("5")
+            tv.dec_volume()
         
         #переключить канал
         elif choice == "6":
-            print("6")
             tv.set_channel()
         
         # непонятный пользовательский ввод
