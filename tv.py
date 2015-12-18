@@ -22,6 +22,7 @@ class TV(object):
     def state(self):
         s = "Состояние телевизора:\n"
         if self.on_off: # если телевизор включен
+            s += "Телевизор включен.\n"
             s += "Громкость - " + str(self.volume) + "\n" + "Канал - " + str(self.channel)
         else:
             s += "Телевизор выключен."
