@@ -7,7 +7,7 @@
 class TV(object):
     
     """Виртуальный телевизор"""
-    def __init__(self, volume=0, channel=0):
+    def __init__(self, volume=0, channel=1):
         on_off=0         # TV выключен
         min_vol=0        # минимальная громкость
         max_vol=100      # максимальная громкость
@@ -25,8 +25,20 @@ class TV(object):
             s += "Громкость - " + str(self.volume) + "\n" + "Канал - " + str(self.channel)
         else:
             s += "Телевизор выключен."
-        return s    
+        return s
 
+    """Включает телевизор"""
+    def on(self):
+        if not self.on_off:   # если телевизор выключен
+            self.on_off = 1    # включим телевизор
+            print("Телевизор включен.")    
+
+    """Выключает телевизор"""
+    def off(self):
+        if self.on_off:    # если телевизор включен
+            self.on_off = 0    # выключим телевизор
+            print("Телевизор выключен.")
+    
 # Главный модуль
 def main():
     """Создадим экземпляр объекта - телевизор"""
@@ -56,11 +68,11 @@ def main():
         
         #включить телевизор
         elif choice == "1":
-            print("1")
+            tv.on()
         
         #выключить телевизор
         elif choice == "2":
-            print("2")
+            tv.off()
             
         #статус(состояние) телевизора
         elif choice == "3":
