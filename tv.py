@@ -5,8 +5,9 @@
 # в допустимых пределах. 
 
 class TV(object):
+    
     """Виртуальный телевизор"""
-    def __init__(self, volume=0, channel=1):
+    def __init__(self, volume=0, channel=0):
         on_off=0         # TV выключен
         min_vol=0        # минимальная громкость
         max_vol=100      # максимальная громкость
@@ -16,9 +17,21 @@ class TV(object):
         self.on_off=on_off
         self.volume=volume
         self.channel=channel
+        
+    """Отражает состояние телевизора"""
+    def state(self):
+        s = "Состояние телевизора:\n"
+        if self.on_off: # если телевизор включен
+            s += "Громкость - " + str(self.volume) + "\n" + "Канал - " + str(self.channel)
+        else:
+            s += "Телевизор выключен."
+        return s    
 
 # Главный модуль
 def main():
+    """Создадим экземпляр объекта - телевизор"""
+    tv = TV()
+    
     # организация главного меню
     choice = None
     while choice != "0":
@@ -51,7 +64,7 @@ def main():
             
         #статус(состояние) телевизора
         elif choice == "3":
-            print("3")
+            print(tv.state())
             
         #увеличить громкость
         elif choice == "4":
